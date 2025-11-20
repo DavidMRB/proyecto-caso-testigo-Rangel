@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - name: Cache dependencies
@@ -194,13 +194,13 @@ jobs:
     needs: [performance-tests]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
-      - uses: actions/checkout@v4
-      - name: Install Render CLI
-        run: npm install -g @render/cli
-      - name: Deploy backend
-        env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-        run: render deploy service <SERVICE_ID>
+      - name: Trigger Render Deploy
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+      
+      - name: Deployment triggered
+        run: |
+          echo "✅ Deployment triggered on Render"
+          echo "Check status at: https://dashboard.render.com"
 
   notify:
     name: Notification
