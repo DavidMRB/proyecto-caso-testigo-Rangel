@@ -1,7 +1,13 @@
 {
   "version": 2,
-  "buildCommand": "cd frontend && npm ci && npm run build",
   "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "frontend/dist"
+      }
+    },
     {
       "src": "api/index.py",
       "use": "@vercel/python",
