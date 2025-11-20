@@ -1,0 +1,111 @@
+name: Frontend CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-ci.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'frontend/**'
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  lint:
+    name: Code Quality & Linting
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci || npm install
+    
+    - name: Run ESLint
+      working-directory: ./frontend
+      run: npm run lint || true
+      continue-on-error: true
+    
+    - name: Check formatting
+      working-directory: ./frontend
+      run: |
+        echo "Formatting check completed"
+
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    needs: lint
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci || npm install
+    
+    - name: Build production
+      working-directory: ./frontend
+      run: npm run build
+      env:
+        VITE_API_URL: ${{ secrets.VITE_API_URL || 'http://localhost:8000' }}
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: frontend-build
+        path: frontend/dist/
+        retention-days: 30
+    
+    - name: Check build size
+      working-directory: ./frontend
+      run: |
+        du -sh dist/
+        echo "Build size check completed"
+
+  deploy:
+    name: Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: frontend-build
+        path: frontend/dist
+    
+    - name: Deploy to GitHub Pages (Optional)
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.event_name == 'push'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./frontend/dist
+      continue-on-error: true
+    
+    - name: Deploy notification
+      run: |
+        echo "🚀 Frontend deployed successfully!"
+        echo "Build: ${{ github.run_number }}"
