@@ -1,418 +1,215 @@
-# 🚀 Sistema de Gestión de Tareas Empresariales
 
-[![Backend CI](https://github.com/tu-usuario/proyecto-caso-testigo-[apellido]/workflows/Backend%20CI%2FCD%20Pipeline/badge.svg)](https://github.com/tu-usuario/proyecto-caso-testigo-[apellido]/actions)
-[![Frontend CI](https://github.com/tu-usuario/proyecto-caso-testigo-[apellido]/workflows/Frontend%20CI%2FCD%20Pipeline/badge.svg)](https://github.com/tu-usuario/proyecto-caso-testigo-[apellido]/actions)
-[![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen)](./backend/htmlcov/index.html)
+# 📦 Sistema de Gestión de Tareas Empresariales  
+### **Proyecto Caso Testigo — Rangel**
 
-## 📋 Descripción del Proyecto
+Este repositorio contiene un sistema completo de **gestión de tareas empresariales**, desarrollado como proyecto caso testigo para demostrar:
 
-Sistema completo de gestión de tareas empresariales con arquitectura moderna, implementando CI/CD, principios SOLID, y suite completa de testing. Desarrollado como proyecto final del curso de Testing y QA.
+- Buenas prácticas de **arquitectura backend y frontend**  
+- Implementación profesional de **CI/CD con GitHub Actions**  
+- Despliegue moderno usando **Render (backend)** y **Vercel (frontend)**  
+- Integración total mediante API REST  
+- Uso de herramientas de **testing, métricas y validación de calidad**  
 
-## 🎯 Objetivos Cumplidos
-
-- ✅ API REST completa con FastAPI (Python 3.11)
-- ✅ Frontend SPA con React 18 + Zustand
-- ✅ Pipeline CI/CD funcional con GitHub Actions
-- ✅ +50 tests automatizados (unitarios, integración, E2E, performance)
-- ✅ Cobertura de código > 80%
-- ✅ Diseño responsive mobile-first
-- ✅ Principios SOLID y patrones de diseño
-- ✅ Dockerización completa
-
-## 🏗️ Arquitectura del Sistema
-
-```
-┌─────────────┐      HTTP/REST      ┌──────────────┐
-│   Frontend  │◄───────────────────►│   Backend    │
-│  React SPA  │      JSON API       │  FastAPI     │
-└─────────────┘                     └──────────────┘
-      │                                    │
-      │                                    │
-      ▼                                    ▼
- ┌──────────┐                      ┌─────────────┐
- │ Zustand  │                      │  In-Memory  │
- │  Store   │                      │  Repository │
- └──────────┘                      └─────────────┘
-```
-
-## 🛠️ Tecnologías Utilizadas
-
-### Backend
-- **Framework**: FastAPI 0.104+
-- **Testing**: pytest, pytest-cov, pytest-benchmark
-- **E2E**: Selenium WebDriver
-- **Code Quality**: Black, Flake8, Pylint, MyPy
-- **Server**: Uvicorn
-
-### Frontend
-- **Framework**: React 18.2
-- **State Management**: Zustand 4.4
-- **Build Tool**: Vite 5.0
-- **Styling**: Tailwind CSS 3.3
-- **Icons**: Lucide React
-- **HTTP Client**: Axios
-
-### DevOps
-- **CI/CD**: GitHub Actions
-- **Deployment**: Vercel (Serverless)
-- **Version Control**: Git
-- **Python Version**: 3.13 (local), 3.9 (Vercel)
-
-## 📦 Instalación y Configuración
-
-### Prerrequisitos
-```bash
-# Verificar versiones
-python --version  # 3.8+
-node --version    # 16+
-docker --version
-```
-
-### 1. Clonar Repositorio
-```bash
-git clone https://github.com/tu-usuario/proyecto-caso-testigo-[apellido].git
-cd proyecto-caso-testigo-[apellido]
-```
-
-### 2. Setup Backend
-```bash
-cd backend
-
-# Crear entorno virtual
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Instalar dependencias
-pip install -r requirements.txt
-
-# Ejecutar servidor
-uvicorn app.main:app --reload
-
-# API disponible en: http://localhost:8000
-# Documentación: http://localhost:8000/docs
-```
-
-### 3. Setup Frontend
-```bash
-cd frontend
-
-# Instalar dependencias
-npm install
-
-# Configurar variables de entorno
-echo "VITE_API_URL=http://localhost:8000" > .env
-
-# Ejecutar en desarrollo
-npm run dev
-
-# Aplicación disponible en: http://localhost:5173
-```
-
-### 4. Usando Docker Compose (Recomendado)
-```bash
-# En la raíz del proyecto
-docker-compose up -d
-
-# Acceder a:
-# Frontend: http://localhost:5173
-# Backend: http://localhost:8000
-# API Docs: http://localhost:8000/docs
-```
-
-## 🧪 Ejecutar Tests
-
-### Tests Backend
-
-```bash
-cd backend
-
-# Tests unitarios (10+ tests)
-pytest tests/unit/ -v --cov=app
-
-# Tests de integración (20+ tests)
-pytest tests/integration/ -v
-
-# Tests E2E con Selenium (10+ tests)
-pytest tests/e2e/ -v
-
-# Tests de performance (5+ tests)
-pytest tests/performance/ -v --benchmark-only
-
-# Suite completa con cobertura
-pytest -v --cov=app --cov-report=html --cov-report=term
-
-# Ver reporte de cobertura
-open htmlcov/index.html
-```
-
-### Cobertura Actual
-```
-Name                    Stmts   Miss  Cover
--------------------------------------------
-app/__init__.py             0      0   100%
-app/main.py               245     20    92%
-app/models.py              45      3    93%
-app/services.py            78      8    90%
--------------------------------------------
-TOTAL                     368     31    85%
-```
-
-## 📊 Estructura del Proyecto
-
-```
-proyecto-caso-testigo-[apellido]/
-│
-├── backend/
-│   ├── app/
-│   │   ├── __init__.py
-│   │   ├── main.py              # API principal con SOLID
-│   │   ├── models.py            # Modelos Pydantic
-│   │   ├── services.py          # Lógica de negocio
-│   │   └── utils.py             # Utilidades
-│   │
-│   ├── tests/
-│   │   ├── unit/                # 10+ tests unitarios
-│   │   ├── integration/         # 20+ tests integración
-│   │   ├── e2e/                 # 10+ tests E2E
-│   │   └── performance/         # 5+ tests performance
-│   │
-│   ├── requirements.txt
-│   ├── Dockerfile
-│   └── pytest.ini
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/          # 5+ componentes React
-│   │   │   ├── Header.jsx
-│   │   │   ├── TaskForm.jsx
-│   │   │   ├── TaskList.jsx
-│   │   │   ├── TaskCard.jsx
-│   │   │   ├── TaskFilters.jsx
-│   │   │   └── TaskStats.jsx
-│   │   │
-│   │   ├── store/
-│   │   │   └── taskStore.js     # Zustand store
-│   │   │
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   │
-│   ├── package.json
-│   ├── vite.config.js
-│   └── Dockerfile
-│
-├── .github/
-│   └── workflows/
-│       ├── backend-ci.yml       # Pipeline backend
-│       └── frontend-ci.yml      # Pipeline frontend
-│
-├── docs/
-│   ├── architecture.md
-│   ├── api-documentation.md
-│   └── deployment-guide.md
-│
-├── docker-compose.yml
-├── README.md
-└── .gitignore
-```
-
-## 🔄 Pipeline CI/CD
-
-### Workflow Backend
-1. **Code Quality**: Black, Flake8, Pylint
-2. **Unit Tests**: 10+ tests con cobertura > 80%
-3. **Integration Tests**: 20+ tests de API
-4. **E2E Tests**: 10+ tests con Selenium
-5. **Performance Tests**: 5+ benchmarks
-6. **Docker Build**: Construcción y push de imagen
-7. **Deployment**: Deploy automático en main
-
-### Workflow Frontend
-1. **Linting**: ESLint checks
-2. **Build**: Compilación para producción
-3. **Deploy**: GitHub Pages o Netlify
-
-### Historial de Builds
-- ✅ Build #1-10: Configuración inicial
-- ✅ Build #11-20: Implementación de features
-- ✅ Build #21-30: Optimizaciones y fixes
-- ✅ **Total: 30+ builds exitosos**
-
-## 📖 API Endpoints
-
-### Tasks
-
-| Método | Endpoint | Descripción | Auth |
-|--------|----------|-------------|------|
-| GET | `/` | Health check | No |
-| GET | `/health` | Status detallado | No |
-| POST | `/tasks` | Crear tarea | No |
-| GET | `/tasks` | Listar tareas | No |
-| GET | `/tasks/{id}` | Obtener tarea | No |
-| PUT | `/tasks/{id}` | Actualizar tarea | No |
-| DELETE | `/tasks/{id}` | Eliminar tarea | No |
-
-### Ejemplos de Uso
-
-**Crear Tarea:**
-```bash
-curl -X POST http://localhost:8000/tasks \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Implementar autenticación",
-    "description": "Agregar JWT al sistema",
-    "priority": "high",
-    "status": "pending"
-  }'
-```
-
-**Listar con Filtros:**
-```bash
-curl "http://localhost:8000/tasks?status=pending&priority=high"
-```
-
-## 🎨 Características del Frontend
-
-### Componentes Principales
-1. **Header**: Navegación y branding
-2. **TaskStats**: Dashboard con métricas
-3. **TaskFilters**: Filtrado por estado/prioridad
-4. **TaskForm**: Formulario CRUD
-5. **TaskList**: Lista de tareas
-6. **TaskCard**: Card individual con acciones
-
-### Funcionalidades
-- ✅ CRUD completo de tareas
-- ✅ Filtrado en tiempo real
-- ✅ Búsqueda por título/descripción
-- ✅ Estados visuales (pending, in_progress, completed)
-- ✅ Prioridades con colores
-- ✅ Responsive design (mobile, tablet, desktop)
-- ✅ Feedback visual de operaciones
-- ✅ Manejo de errores
-
-## 🏆 Principios SOLID Implementados
-
-### Single Responsibility
-- `TaskRepository`: Solo manejo de datos
-- `TaskService`: Solo lógica de negocio
-- `FastAPI routes`: Solo routing
-
-### Open/Closed
-- `TaskRepository` es abstracción extendible
-- Nuevos repositorios sin modificar código existente
-
-### Liskov Substitution
-- `InMemoryTaskRepository` sustituye a `TaskRepository`
-- Cualquier implementación funciona igual
-
-### Interface Segregation
-- Interfaces específicas por responsabilidad
-- Modelos Pydantic separados (Create, Update, Response)
-
-### Dependency Inversion
-- Servicios dependen de abstracciones (TaskRepository)
-- No de implementaciones concretas
-
-## 📈 Métricas de Calidad
-
-### Cobertura de Código
-- **Unit Tests**: 92% de cobertura
-- **Integration Tests**: 88% de cobertura
-- **Total**: 85% de cobertura global
-
-### Performance Benchmarks
-- **Create Task**: 15ms promedio
-- **List Tasks**: 8ms promedio
-- **Get Task**: 5ms promedio
-- **Update Task**: 12ms promedio
-- **Delete Task**: 6ms promedio
-
-### Code Quality
-- **Pylint**: 9.2/10
-- **Flake8**: 0 issues
-- **MyPy**: 100% type coverage
-
-## 🚀 Deployment
-
-### Producción Manual
-
-```bash
-# Build backend
-docker build -t task-api:latest ./backend
-
-# Build frontend
-cd frontend && npm run build
-
-# Deploy
-docker-compose -f docker-compose.prod.yml up -d
-```
-
-### Deployment Automático (CI/CD)
-
-El pipeline automatiza el deployment en cada push a `main`:
-
-1. Tests pasan ✅
-2. Build de imágenes Docker
-3. Push a Docker Hub
-4. Deploy a servidor (configurar secrets)
-
-### Variables de Entorno
-
-**Backend:**
-```env
-PORT=8000
-LOG_LEVEL=info
-CORS_ORIGINS=http://localhost:5173
-```
-
-**Frontend:**
-```env
-VITE_API_URL=https://api.tudominio.com
-```
-
-## 📹 Video Demostración
-
-**Duración**: 10 minutos
-
-**Contenido**:
-1. Arquitectura del sistema (1 min)
-2. Demo de funcionalidades (3 min)
-3. Ejecución de tests (2 min)
-4. Pipeline CI/CD en acción (2 min)
-5. Métricas y reportes (2 min)
-
-**Link**: [Ver video en YouTube](#)
-
-## 👥 Autor
-
-**[Tu Nombre Completo]**
-- Email: tu.email@ejemplo.com
-- GitHub: [@tu-usuario](https://github.com/tu-usuario)
-- LinkedIn: [Tu Perfil](https://linkedin.com/in/tu-perfil)
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - ver [LICENSE](LICENSE) para detalles.
-
-## 🙏 Agradecimientos
-
-- Curso de Testing y QA
-- Comunidad FastAPI
-- Comunidad React
-- GitHub Actions
+El proyecto refleja un entorno realista de desarrollo, pruebas, automatización y despliegue continuo como se haría en un entorno profesional.
 
 ---
 
-## 📚 Referencias
+# 📘 1. Descripción General del Proyecto
 
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [React Documentation](https://react.dev/)
-- [Pytest Documentation](https://docs.pytest.org/)
-- [GitHub Actions](https://docs.github.com/en/actions)
-- [SOLID Principles](https://en.wikipedia.org/wiki/SOLID)
+El sistema permite administrar tareas empresariales mediante un frontend atractivo y un backend escalable.  
+Su propósito es ser un **caso testigo** que evidencie capacidades técnicas en:
+
+- Desarrollo **Full Stack**
+- Pruebas automatizadas
+- Arquitectura limpia
+- CI/CD moderno
+- Integración frontend-backend
+- Buenas prácticas de programación
+
+### ✔️ Funcionalidades principales
+
+- Crear tareas  
+- Listar todas las tareas  
+- Filtrar por estado  
+- Actualizar tareas  
+- Eliminar tareas  
+- Estados disponibles: *pending*, *in_progress*, *completed*  
+- Comunicación mediante API REST JSON  
+- UI rápida, moderna y responsive  
 
 ---
 
-**Proyecto desarrollado con** ❤️ **para demostrar competencias en Testing, CI/CD y Desarrollo Full Stack**
+# 🏗️ 2. Arquitectura del Sistema
 
-Última actualización: Noviembre 2024
+La arquitectura se divide en dos capas independientes, comunicadas por HTTP:
+
+```
+┌─────────────────────────┐         ┌─────────────────────────┐
+│        FRONTEND          │  HTTP   │         BACKEND          │
+│ React + Zustand + Vite   │◄──────►│ FastAPI + Python         │
+└─────────────────────────┘         └─────────────────────────┘
+           │                                   │
+           ▼                                   ▼
+  Estado global en navegador          Lógica de negocio / DB
+```
+
+---
+
+## 🧩 Backend — FastAPI
+
+El backend sigue un enfoque modular:
+
+```
+backend/
+│── app/
+│   │── main.py          → Inicialización del servidor y rutas
+│   │── routers/         → Endpoints organizados
+│   │── services/        → Lógica de negocio (TaskService)
+│   │── repositories/    → Capa de persistencia
+│   │── schemas/         → Modelos Pydantic v2
+│   └── utils/           → Utilidades
+```
+
+Principales características:
+
+- Arquitectura desacoplada
+- Validación de datos con Pydantic v2
+- Endpoints REST estructurados
+- Manejo correcto de estados HTTP
+- Inyección de dependencias
+
+---
+
+## 🎨 Frontend — React + Zustand + Vite
+
+```
+frontend/
+│── src/
+│   │── components/
+│   │── store/        → Zustand global
+│   │── hooks/
+│   │── pages/
+│   └── main.jsx
+```
+
+Características:
+
+- Administración global con **Zustand**
+- Arquitectura modular
+- Renderización eficiente
+- Tailwind para estilos consistentes
+- Axios para comunicación con backend
+
+---
+
+# 🚀 4. CI/CD — GitHub Actions
+
+El proyecto cuenta con pipelines automatizados para garantizar calidad y estabilidad.
+
+### ✔️ Validación automática al hacer push
+
+- Instalación de dependencias  
+- Limpieza y preparación del entorno  
+- Ejecución de pruebas backend  
+- Linting de código  
+- Validación de build del frontend  
+- Generación automática del paquete para despliegue  
+
+### ✔️ Beneficios
+
+- Evita mezclar código roto en producción  
+- Garantiza calidad uniforme  
+- Automatiza repetitivos manuales  
+- Prepara automáticamente los artefactos para deploy  
+
+---
+
+# ☁️ 5. Despliegue (Render + Vercel)
+
+La aplicación se encuentra desplegada de forma separada, siguiendo buenas prácticas modernas.
+
+---
+
+## 🔵 Backend — Render
+
+Render está configurado como **Web Service**, con:
+
+- Build Command:  
+  ```
+  pip install -r backend/requirements.txt
+  ```
+- Start Command:  
+  ```
+  uvicorn app.main:app --host 0.0.0.0 --port $PORT
+  ```
+- Health Check Endpoint:  
+  ```
+  /health
+  ```
+
+El servicio se reinicia automáticamente en cada push a `main`.
+
+---
+
+## 🟣 Frontend — Vercel
+
+El frontend está desplegado en Vercel.  
+URL pública de producción:
+
+👉 **https://proyecto-caso-testigo-rangel-uyso.vercel.app/**
+
+Variables de entorno:
+
+```
+VITE_API_URL=https://<backend-api>.onrender.com
+```
+
+Integración:
+
+- Cada build toma automáticamente el código del repo  
+- Se genera un artefacto optimizado  
+- Vercel distribuye la app mediante CDN global  
+
+---
+
+# 🧪 6. Testing y Métricas de Calidad
+
+El proyecto sigue una estrategia de validación progresiva.
+
+## ✔️ Herramientas usadas
+
+- **pytest** → pruebas unitarias e integración  
+- **coverage.py** → reporte de cobertura  
+- **requests** → testing de endpoints  
+- **GitHub Actions** → ejecución automatizada  
+
+## ✔️ Tipos de pruebas integradas
+
+| Tipo | Objetivo |
+|------|----------|
+| Unitarias | Validar cada servicio individual |
+| Integración | Probar endpoint + servicio + repositorio |
+| Contratos | Validar esquemas Pydantic y respuestas |
+| Smoke tests | Verificar que todo arranca correctamente |
+
+## ✔️ Métricas sugeridas
+
+- Tiempo de respuesta API: **20–60 ms**
+- Cobertura esperada: **70–90%**
+- Tiempo de ejecución total CI: **40–60 segundos**
+
+---
+
+# 📝 9. Licencia y Créditos
+
+Proyecto desarrollado por:
+
+👤 **David Mauricio Rangel Báez**  
+GitHub: https://github.com/DavidMRB  
+
+Licencia: **MIT License**  
+Puedes usar y modificar libremente este proyecto con fines educativos o profesionales.
+
+---
+
+### ✅ Proyecto Caso Testigo completado con prácticas profesionales de desarrollo, testing y despliegue.
