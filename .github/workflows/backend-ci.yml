@@ -31,7 +31,7 @@ jobs:
         python-version: ${{ env.PYTHON_VERSION }}
     
     - name: Cache dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements.txt') }}
@@ -89,7 +89,7 @@ jobs:
           --cov-fail-under=80
     
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         file: ./backend/coverage.xml
         flags: unittests
@@ -97,7 +97,7 @@ jobs:
       continue-on-error: true
     
     - name: Upload coverage HTML report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-report
         path: backend/htmlcov/
@@ -189,7 +189,7 @@ jobs:
     
     - name: Upload E2E screenshots
       if: failure()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: e2e-screenshots
         path: backend/tests/e2e/screenshots/
@@ -222,7 +222,7 @@ jobs:
           --benchmark-json=benchmark.json
     
     - name: Upload benchmark results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: benchmark-results
         path: backend/benchmark.json
