@@ -1,0 +1,17 @@
+.git
+.gitignore
+.github
+node_modules
+frontend/node_modules
+backend/__pycache__
+backend/.pytest_cache
+.env.local
+*.pyc
+.DS_Store
+.vscode
+README.md
+GITHUB_ACTIONS_SETUP.md
+CI_CD_DEPLOYMENT_SUMMARY.md
+ESTRUCTURA_PROYECTO_VERCEL.md
+GUIA_DEPLOYMENT_VERCEL.md
+INICIO_RAPIDO.md
